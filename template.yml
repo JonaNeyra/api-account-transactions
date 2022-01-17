@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Account Operations Template
+
+Globals:
+  Function:
+    Timeout: 15
+    Layers:
+      - !Ref Flask
+Resources:
+  LambdaOperations:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.handler
+      Runtime: python3.9
+      Layers:
+        - Ref: Flask
+      Events:
+        ResetHandler:
+          Type: Api
+          Properties:
+            Path: /reset
+            Method: post
+        BalanceHandler:
+          Type: Api
+          Properties:
+            Path: /balance
+            Method: get
+        EventHandler:
+          Type: Api
+          Properties:
+            Path: /event
+            Method: post
+
+  Flask:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: flask-dependency
+      Description: Flask Dependencies
+      ContentUri: dependency/
+      CompatibleRuntimes:
+        - python3.9
+      RetentionPolicy: Retain
+    Metadata:
+      BuildMethod: python3.9

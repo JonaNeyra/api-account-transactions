@@ -1,0 +1,5 @@
+DEPOSIT_TYPE = 'deposit'
+WITHDRAW_TYPE = 'withdraw'
+TRANSFER_TYPE = 'transfer'
+S3_SERVICE = 's3'
+AWS_REGION = 'us-east-1'
